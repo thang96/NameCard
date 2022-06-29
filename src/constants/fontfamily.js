@@ -15,10 +15,7 @@ export default fontFamily = [
         label:'Anton-Regular',
         value:'Anton-Regular'
     },
-    {
-        label:'Assistant-VariableFont_wght',
-        value:'Assistant-VariableFont_wght'
-    },
+    
     {
         label:'Blaka-Regular',
         value:'Blaka-Regular'
@@ -28,15 +25,91 @@ export default fontFamily = [
         value:'BlakaHollow-Regular'
     },
     {
-        label:'Caveat-VariableFont_wght',
-        value:'Caveat-VariableFont_wght'
+        label:'Cookie-Regular',
+        value:'Cookie-Regular'
     },
     {
-        label:'Changa-VariableFont_wght',
-        value:'Changa-VariableFont_wght'
+        label:'Fascinate-Regular',
+        value:'Fascinate-Regular'
     },
     {
-        label:'Cinzel-VariableFont_wght',
-        value:'Cinzel-VariableFont_wght'
+        label:'FascinateInline-Regular',
+        value:'FascinateInline-Regular'
+    },
+    {
+        label:'FjallaOne-Regular',
+        value:'FjallaOne-Regular'
+    },
+    {
+        label:'GentiumPlus-BoldItalic',
+        value:'GentiumPlus-BoldItalic'
+    },
+    {
+        label:'GreatVibes-Regular',
+        value:'GreatVibes-Regular'
+    },
+    {
+        label:'Joan-Regular',
+        value:'Joan-Regular'
+    },
+    {
+        label:'KdamThmorPro-Regular',
+        value:'KdamThmorPro-Regular'
+    },
+    {
+        label:'Lobster-Regular',
+        value:'Lobster-Regular'
+    },
+    {
+        label:'Monofett-Regular',
+        value:'Monofett-Regular'
+    },
+    {
+        label:'NanumMyeongjo-ExtraBold',
+        value:'NanumMyeongjo-ExtraBold'
+    },
+    {
+        label:'Pacifico-Regular',
+        value:'Pacifico-Regular'
+    },
+    {
+        label:'PatrickHand-Regular',
+        value:'PatrickHand-Regular'
+    },
+    {
+        label:'PermanentMarker-Regular',
+        value:'PermanentMarker-Regular'
+    },
+    {
+        label:'PressStart2P-Regular',
+        value:'PressStart2P-Regular'
+    },
+    {
+        label:'Rajdhani-Light',
+        value:'Rajdhani-Light'
+    },
+    {
+        label:'Roboto-Black',
+        value:'Roboto-Black'
+    },
+    {
+        label:'Sacramento-Regular',
+        value:'Sacramento-Regular'
+    },
+    {
+        label:'Satisfy-Regular',
+        value:'Satisfy-Regular'
+    },
+    {
+        label:'ShadowsIntoLight-Regular',
+        value:'ShadowsIntoLight-Regular'
+    },
+    {
+        label:'TiroGurmukhi-Italic',
+        value:'TiroGurmukhi-Italic'
+    },
+    {
+        label:'Yellowtail-Regular',
+        value:'Yellowtail-Regular'
     },
 ]

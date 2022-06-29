@@ -233,7 +233,6 @@ const BusinessCardDesign = () => {
                         <View
                           style={[
                             {width: kt.width, height: kt.height},
-                            // {transform: [{rotate: '45deg'}]},
                           ]}>
                           <Image
                             resizeMode="cover"
@@ -265,7 +264,6 @@ const BusinessCardDesign = () => {
                           width: boxPosition.width,
                           height: boxPosition.height,
                         });
-                        console.log(_box, 'boxx');
                         dispatch(updateResource(index, _box));
                       }}>
                       <TouchableWithoutFeedback
@@ -274,12 +272,11 @@ const BusinessCardDesign = () => {
                         <View
                           style={[
                             {width: kt.width, height: kt.height},
-                            // {transform: [{rotate: '45deg'}]},
                           ]}>
                           <Text
                             style={{
-                              width: kt.width,
-                              height: kt.height,
+                              width: resources[index].width-4,
+                              height: resources[index].height-4,
                               color: color,
                               fontFamily: fontfamily,
                               fontSize: fontsize,

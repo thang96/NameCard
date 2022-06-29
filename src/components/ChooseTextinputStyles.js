@@ -23,48 +23,6 @@ import {PickerFontSize} from './PickerFontSize';
 import fontfamily from '../constants/fontfamily';
 import CustomPicker from './CustomPicker';
 
-// const fontfamily = [
-//   {
-//     label:'Acme-Regular',
-//     value:'Acme-Regular'
-// },
-// {
-//     label:'AlfaSlabOne-Regular',
-//     value:'AlfaSlabOne-Regular'
-// },
-// {
-//     label:'AmaticSC-Bold',
-//     value:'AmaticSC-Bold'
-// },
-// {
-//     label:'Anton-Regular',
-//     value:'Anton-Regular'
-// },
-// {
-//     label:'Assistant-VariableFont_wght',
-//     value:'Assistant-VariableFont_wght'
-// },
-// {
-//     label:'Blaka-Regular',
-//     value:'Blaka-Regular'
-// },
-// {
-//     label:'BlakaHollow-Regular',
-//     value:'BlakaHollow-Regular'
-// },
-// {
-//     label:'Caveat-VariableFont_wght',
-//     value:'Caveat-VariableFont_wght'
-// },
-// {
-//     label:'Changa-VariableFont_wght',
-//     value:'Changa-VariableFont_wght'
-// },
-// {
-//     label:'Cinzel-VariableFont_wght',
-//     value:'Cinzel-VariableFont_wght'
-// },
-// ]
 
 const FONT_SIZES = Array.from(new Array(62)).map((_, index) => ({
   label: index + 8,
@@ -83,7 +41,7 @@ const ChooseTextinputStyles = props => {
   const [selectedItalic, setSelectedItalic] = useState(false);
   const navigation = useNavigation();
   const [fontFamily, setFontFamily] = useState('');
-  const [fontSize, setFontSize] = useState(12);
+  const [fontSize, setFontSize] = useState(60);
   const [selectedFontFamily, setSelectedFontFamily] = useState(false);
   const [isChoosingFont, setIsChoosingFont] = useState(false);
   const [isChoosingSize, setIsChoosingSize] = useState(false);
@@ -232,6 +190,7 @@ const ChooseTextinputStyles = props => {
             placeholder={'Add text'}
             style={{
               flex: 1,
+
             }}
           />
         </View>
@@ -304,6 +263,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(0,255,255)',
     alignSelf: 'center',
     backgroundColor: 'rgba(0,0,0,0.1)',
+    justifyContent:'center'
   },
   fontText: {
     borderWidth: 2,

@@ -13,24 +13,8 @@ export const PickerFontFamily = props => {
       <Picker.Item label="AlfaSlabOne-Regular" value="AlfaSlabOne-Regular" />
       <Picker.Item label="AmaticSC-Bold" value="AmaticSC-Bold" />
       <Picker.Item label="Anton-Regular" value="Anton-Regular" />
-      <Picker.Item
-        label="Assistant-VariableFont_wght"
-        value="Assistant-VariableFont_wght"
-      />
       <Picker.Item label="Blaka-Regular" value="Blaka-Regular" />
       <Picker.Item label="BlakaHollow-Regular" value="BlakaHollow-Regular" />
-      <Picker.Item
-        label="Caveat-VariableFont_wght"
-        value="Caveat-VariableFont_wght"
-      />
-      <Picker.Item
-        label="Changa-VariableFont_wght"
-        value="Changa-VariableFont_wght"
-      />
-      <Picker.Item
-        label="Cinzel-VariableFont_wght"
-        value="Cinzel-VariableFont_wght"
-      />
       <Picker.Item label="Cookie-Regular" value="Cookie-Regular" />
       <Picker.Item label="Fascinate-Regular" value="Fascinate-Regular" />
       <Picker.Item
