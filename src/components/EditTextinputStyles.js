@@ -14,10 +14,14 @@ import Orientation from 'react-native-orientation-locker';
 import CustomButton from './CustomButton';
 import CustomInput from './CustomInput';
 import Picker from './Picker';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {State} from 'react-native-gesture-handler';
-import {addResource, updateTextInput} from '../redux/actions/IconAction';
+import {
+  addResource,
+  updateTextInput,
+  updateResource,
+} from '../redux/actions/IconAction';
 import {PickerFontFamily} from './PickerFontFamily';
 import {PickerFontSize} from './PickerFontSize';
 import fontfamily from '../constants/fontfamily';
@@ -28,7 +32,7 @@ const FONT_SIZES = Array.from(new Array(62)).map((_, index) => ({
   value: index + 8,
 }));
 
-const ChooseTextinputStyles = props => {
+const EditTextinputStyles = props => {
   useEffect(() => {
     Orientation.lockToLandscape();
   });
@@ -41,22 +45,32 @@ const ChooseTextinputStyles = props => {
   const navigation = useNavigation();
   const [fontFamily, setFontFamily] = useState('');
   const [fontSize, setFontSize] = useState(40);
-  const [selectedFontFamily, setSelectedFontFamily] = useState(false);
   const [isChoosingFont, setIsChoosingFont] = useState(false);
   const [isChoosingSize, setIsChoosingSize] = useState(false);
-
   const [colors, setColors] = useState(null);
-
   const colorStore = useSelector(state => state?.Color?.color);
-
   const dispatch = useDispatch();
-  useEffect(() => {
-    setColors(colorStore);
-  }, [colorStore]);
+
+  const route = useRoute();
+
+  console.log(route?.params, 'route');
+  console.log(route?.params?.params?.index, 'route');
+
+  useEffect(
+    () => {
+      setColors(colorStore);
+      setFontFamily(route?.params?.params?.fontfamily);
+      setText(route?.params?.params?.value);
+      setcolorText(route?.params?.params?.color);
+      setFontSize(route?.params?.params?.fontsize);
+    },
+    [
+      // colorStore
+    ],
+  );
   const changeColor = item => {
     setcolorText(item.value);
   };
-  // if (!modalVisible) return null;
 
   const changeBold = () => {
     setSelectedBold(prev => (prev == true ? false : true));
@@ -195,7 +209,7 @@ const ChooseTextinputStyles = props => {
         <CustomButton
           disabled={text.trim() == '' ? true : false}
           colorText={colorText}
-          title={'Add text'}
+          title={'Edit text'}
           textColor={'white'}
           style={styles.viewEdit}
           backgroundColor={text.trim() == '' ? 'grey' : 'rgb(0,255,255)'}
@@ -213,7 +227,8 @@ const ChooseTextinputStyles = props => {
               bold: selectedBold,
               italic: selectedItalic,
             };
-            dispatch(addResource(newResource));
+            console.log(newResource, 'resource');
+            dispatch(updateResource(route?.params?.params?.index, newResource));
             navigation.goBack();
           }}
         />
@@ -347,4 +362,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChooseTextinputStyles;
+export default EditTextinputStyles;

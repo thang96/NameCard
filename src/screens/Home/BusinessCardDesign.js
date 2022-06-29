@@ -116,12 +116,55 @@ const BusinessCardDesign = () => {
               navigation.navigate('CreateColor');
             }}
             style={styles.buttonTopTab}>
-            <Text style={styles.textTopTab}>Edit color</Text>
+            <Text style={styles.textTopTab}>Add color</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={() => {
               navigation.navigate('ChooseTextinputStyles');
+            }}
+            style={styles.buttonTopTab}>
+            <Text style={styles.textTopTab}>Add text</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              const _selectedbox = resources.map(
+                (
+                  {
+                    width,
+                    height,
+                    type,
+                    x,
+                    y,
+                    value,
+                    color,
+                    fontfamily,
+                    fontsize,
+                    bold,
+                    italic,
+                  },
+                  index,
+                ) => {
+                  if (index === selectedIndex && type === 'text') {
+                    navigation.navigate('EditTextinputStyles', {
+                      params: {
+                        value: value,
+                        fontfamily: fontfamily,
+                        fontsize: fontsize,
+                        bold: bold,
+                        italic: italic,
+                        color: color,
+                        x: x,
+                        y: y,
+                        width: width,
+                        height: height,
+                        index: index,
+                      },
+                    });
+                  }
+                },
+              );
             }}
             style={styles.buttonTopTab}>
             <Text style={styles.textTopTab}>Edit text</Text>
@@ -230,10 +273,7 @@ const BusinessCardDesign = () => {
                       <TouchableWithoutFeedback
                         style={[StyleSheet.absoluteFill]}
                         onPress={onTogglePressed(index)}>
-                        <View
-                          style={[
-                            {width: kt.width, height: kt.height},
-                          ]}>
+                        <View style={[{width: kt.width, height: kt.height}]}>
                           <Image
                             resizeMode="cover"
                             style={{
@@ -269,14 +309,11 @@ const BusinessCardDesign = () => {
                       <TouchableWithoutFeedback
                         style={[StyleSheet.absoluteFill]}
                         onPress={onTogglePressed(index)}>
-                        <View
-                          style={[
-                            {width: kt.width, height: kt.height},
-                          ]}>
+                        <View style={[{width: kt.width, height: kt.height}]}>
                           <Text
                             style={{
-                              width: resources[index].width-4,
-                              height: resources[index].height-4,
+                              width: resources[index].width - 4,
+                              height: resources[index].height - 4,
                               color: color,
                               fontFamily: fontfamily,
                               fontSize: fontsize,
@@ -319,7 +356,7 @@ const styles = StyleSheet.create({
   buttonTopTab: {
     height: 45,
     width: 150,
-    marginRight: 20,
+    marginRight: 15,
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
