@@ -23,7 +23,6 @@ import {PickerFontSize} from './PickerFontSize';
 import fontfamily from '../constants/fontfamily';
 import CustomPicker from './CustomPicker';
 
-
 const FONT_SIZES = Array.from(new Array(62)).map((_, index) => ({
   label: index + 8,
   value: index + 8,
@@ -41,7 +40,7 @@ const ChooseTextinputStyles = props => {
   const [selectedItalic, setSelectedItalic] = useState(false);
   const navigation = useNavigation();
   const [fontFamily, setFontFamily] = useState('');
-  const [fontSize, setFontSize] = useState(60);
+  const [fontSize, setFontSize] = useState(40);
   const [selectedFontFamily, setSelectedFontFamily] = useState(false);
   const [isChoosingFont, setIsChoosingFont] = useState(false);
   const [isChoosingSize, setIsChoosingSize] = useState(false);
@@ -103,29 +102,28 @@ const ChooseTextinputStyles = props => {
             open={isChoosingFont}
             data={fontfamily}
           />
-                        <CustomPicker
-                onPress={onChangeSize}
-                open={isChoosingSize}
-                data={FONT_SIZES}
-              />
+          <CustomPicker
+            onPress={onChangeSize}
+            open={isChoosingSize}
+            data={FONT_SIZES}
+          />
           <View style={styles.viewPropDownRow}>
-
-              <TouchableOpacity
-                onPress={onToggleChoosingSize}
-                style={{
-                  height: 50,
-                  borderWidth: 1,
-                  borderColor: 'rgb(112,112,112)',
-                  borderRadius: 5,
-                  width: 110,
-                  alignItems: 'center',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 5,
-                }}>
-                <Text style={{color: 'black'}}>{fontSize}</Text>
-                <Image style={{width: 20, height: 20}} source={icons.sortDow} />
-              </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onToggleChoosingSize}
+              style={{
+                height: 50,
+                borderWidth: 1,
+                borderColor: 'rgb(112,112,112)',
+                borderRadius: 5,
+                width: 110,
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                paddingHorizontal: 5,
+              }}>
+              <Text style={{color: 'black'}}>{fontSize}</Text>
+              <Image style={{width: 20, height: 20}} source={icons.sortDow} />
+            </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => {
@@ -190,7 +188,6 @@ const ChooseTextinputStyles = props => {
             placeholder={'Add text'}
             style={{
               flex: 1,
-
             }}
           />
         </View>
@@ -211,7 +208,7 @@ const ChooseTextinputStyles = props => {
               width: 100,
               height: 100,
               color: colorText,
-              fontfamily: fontFamily===''?null:fontFamily,
+              fontfamily: fontFamily === '' ? null : fontFamily,
               fontsize: fontSize,
               bold: selectedBold,
               italic: selectedItalic,
@@ -263,7 +260,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgb(0,255,255)',
     alignSelf: 'center',
     backgroundColor: 'rgba(0,0,0,0.1)',
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   fontText: {
     borderWidth: 2,
