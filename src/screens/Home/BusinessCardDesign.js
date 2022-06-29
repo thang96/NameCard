@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import GestureBox from '../../components/GestureBox';
-import {icons, images} from '../../constants';
+import {icons, images, LogoPirate, svgimages} from '../../constants';
 import CustomButton from '../../components/CustomButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -329,6 +329,10 @@ const BusinessCardDesign = () => {
                 </View>
               ),
             )}
+            <LogoPirate width={45} height={45} fill={'rgb(0,0,0)'} />
+            {Object.values(svgimages).map((IconItem, index) => (
+              <IconItem key={index} width={45} height={45} fill="rgb(0,0,0)" />
+            ))}
           </View>
         </View>
       </KeyboardAvoidingView>
