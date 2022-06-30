@@ -54,18 +54,18 @@ const Splash = () => {
   useEffect(() => {
     Orientation.lockToLandscape();
     fadeIn();
-  }, []);
+  });
 
   useEffect(() => {
-    setTimeout(() => {
+    const login = setTimeout(() => {
       AsyncStorage.getItem('useInfo')
         .then(value => {
-          dispatch(updateUse(JSON.parse(value)));
-          setIsReady(true);
+          dispatch(updateUse(JSON.parse(value))), setIsReady(true);
+          clearTimeout(login);
         })
-        .then(() => clearTimeout())
         .catch(e => {
           setIsReady(true);
+          clearTimeout(login);
         });
     }, 2000);
   });

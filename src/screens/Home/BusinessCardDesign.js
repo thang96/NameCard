@@ -96,7 +96,6 @@ const BusinessCardDesign = () => {
       dispatch(removeResource(index));
     };
   };
-
   useEffect(() => {
     setColors(colorStore);
   }, [colorStore]);
@@ -104,32 +103,137 @@ const BusinessCardDesign = () => {
     Orientation.lockToLandscape();
   }, []);
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView style={styles.container}>
-        <View style={styles.viewTopTab}>
-          <TouchableOpacity style={styles.buttonTopTab}>
-            <Text style={styles.textTopTab}>Choose theme</Text>
-          </TouchableOpacity>
+    <>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
+          <View style={styles.viewTopTab}>
+            <TouchableOpacity style={styles.buttonTopTab}>
+              <Text style={styles.textTopTab}>Choose theme</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('CreateColor');
-            }}
-            style={styles.buttonTopTab}>
-            <Text style={styles.textTopTab}>Add color</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('CreateColor');
+              }}
+              style={styles.buttonTopTab}>
+              <Text style={styles.textTopTab}>Add color</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('ChooseTextinputStyles');
-            }}
-            style={styles.buttonTopTab}>
-            <Text style={styles.textTopTab}>Add text</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ChooseTextinputStyles');
+              }}
+              style={styles.buttonTopTab}>
+              <Text style={styles.textTopTab}>Add text</Text>
+            </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              const _selectedbox = resources.map(
+            <TouchableOpacity
+              onPress={() => {
+                resources.map(
+                  (
+                    {
+                      width,
+                      height,
+                      type,
+                      x,
+                      y,
+                      value,
+                      color,
+                      fontfamily,
+                      fontsize,
+                      bold,
+                      italic,
+                    },
+                    index,
+                  ) => {
+                    if (index === selectedIndex && type === 'text') {
+                      navigation.navigate('EditTextinputStyles', {
+                        params: {
+                          value: value,
+                          fontfamily: fontfamily,
+                          fontsize: fontsize,
+                          bold: bold,
+                          italic: italic,
+                          color: color,
+                          x: x,
+                          y: y,
+                          width: width,
+                          height: height,
+                          index: index,
+                        },
+                      });
+                    }
+                  },
+                );
+              }}
+              style={styles.buttonTopTab}>
+              <Text style={styles.textTopTab}>Edit text</Text>
+            </TouchableOpacity>
+
+            <View style={{flex: 1}} />
+
+            <TouchableOpacity style={styles.saveButton}>
+              <Image
+                style={{width: 20, height: 20, tintColor: 'rgb(0,0,225)'}}
+                source={icons.savefile}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View
+              style={{
+                width: '33%',
+                backgroundColor: 'rgb(245,245,245)',
+                zIndex: 9999,
+                flexDirection: 'row',
+              }}>
+              <View style={styles.viewItem}>
+                <FlatList
+                  data={data}
+                  keyExtractor={key => key.icon}
+                  renderItem={({item, index}) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        onAddNewItem(item.icon);
+                      }}
+                      style={styles.eachViewItem}>
+                      <Image
+                        style={{width: '100%', height: '100%'}}
+                        resizeMode="stretch"
+                        source={{uri: item.icon}}
+                      />
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+              <View style={styles.viewColor}>
+                <FlatList
+                  data={colors}
+                  keyExtractor={key => key.value}
+                  renderItem={({item, index}) => (
+                    <TouchableOpacity
+                      key={index}
+                      // onPress={() => {
+                      //   onAddNewItem(item.icon);
+                      // }}
+                      style={[
+                        styles.eachViewColor,
+                        {backgroundColor: item?.value},
+                      ]}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+            <View
+              onLayout={ev => {
+                const layout = ev.nativeEvent.layout;
+                setLimitationHeight(layout.height);
+                setLimitationWidth(layout.width);
+              }}
+              style={{flex: 1}}>
+              {resources.map(
                 (
                   {
                     width,
@@ -145,198 +249,102 @@ const BusinessCardDesign = () => {
                     italic,
                   },
                   index,
-                ) => {
-                  if (index === selectedIndex && type === 'text') {
-                    navigation.navigate('EditTextinputStyles', {
-                      params: {
-                        value: value,
-                        fontfamily: fontfamily,
-                        fontsize: fontsize,
-                        bold: bold,
-                        italic: italic,
-                        color: color,
-                        x: x,
-                        y: y,
-                        width: width,
-                        height: height,
-                        index: index,
-                      },
-                    });
-                  }
-                },
-              );
-            }}
-            style={styles.buttonTopTab}>
-            <Text style={styles.textTopTab}>Edit text</Text>
-          </TouchableOpacity>
-
-          <View style={{flex: 1}} />
-
-          <TouchableOpacity style={styles.saveButton}>
-            <Image
-              style={{width: 20, height: 20, tintColor: 'rgb(0,0,225)'}}
-              source={icons.savefile}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <View
-            style={{
-              width: '33%',
-              backgroundColor: 'rgb(245,245,245)',
-              zIndex: 9999,
-              flexDirection: 'row',
-            }}>
-            <View style={styles.viewItem}>
-              <FlatList
-                data={data}
-                keyExtractor={key => key.icon}
-                renderItem={({item, index}) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => {
-                      onAddNewItem(item.icon);
-                    }}
-                    style={styles.eachViewItem}>
-                    <Image
-                      style={{width: '100%', height: '100%'}}
-                      resizeMode="stretch"
-                      source={{uri: item.icon}}></Image>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-            <View style={styles.viewColor}>
-              <FlatList
-                data={colors}
-                keyExtractor={key => key.value}
-                renderItem={({item, index}) => (
-                  <TouchableOpacity
-                    key={index}
-                    // onPress={() => {
-                    //   onAddNewItem(item.icon);
-                    // }}
-                    style={[
-                      styles.eachViewColor,
-                      {backgroundColor: item?.value},
-                    ]}></TouchableOpacity>
-                )}
-              />
+                ) => (
+                  <View key={index}>
+                    {type === 'image' ? (
+                      <GestureBox
+                        isSelected={index === selectedIndex}
+                        limitationHeight={limitationHeight}
+                        limitationWidth={limitationWidth}
+                        onRemove={onRemove(index)}
+                        onResizeEnd={boxPosition => {
+                          const _boxArray = [...resources];
+                          const _box = {
+                            ..._boxArray[index],
+                            x: boxPosition.x,
+                            y: boxPosition.y,
+                            height: boxPosition.height,
+                            width: boxPosition.width,
+                          };
+                          setKT({
+                            width: boxPosition.width,
+                            height: boxPosition.height,
+                          });
+                          dispatch(updateResource(index, _box));
+                        }}>
+                        <TouchableWithoutFeedback
+                          style={[StyleSheet.absoluteFill]}
+                          onPress={onTogglePressed(index)}>
+                          <View style={[{width: kt.width, height: kt.height}]}>
+                            <Image
+                              resizeMode="cover"
+                              style={{
+                                width: resources[index].width - 4,
+                                height: resources[index].height - 4,
+                              }}
+                              source={{uri: value}}
+                            />
+                          </View>
+                        </TouchableWithoutFeedback>
+                      </GestureBox>
+                    ) : type === 'text' ? (
+                      <GestureBox
+                        isSelected={index === selectedIndex}
+                        limitationHeight={limitationHeight}
+                        limitationWidth={limitationWidth}
+                        onRemove={onRemove(index)}
+                        onResizeEnd={boxPosition => {
+                          const _boxArray = [...resources];
+                          const _box = {
+                            ..._boxArray[index],
+                            x: boxPosition.x,
+                            y: boxPosition.y,
+                            height: boxPosition.height,
+                            width: boxPosition.width,
+                          };
+                          setKT({
+                            width: boxPosition.width,
+                            height: boxPosition.height,
+                          });
+                          dispatch(updateResource(index, _box));
+                        }}>
+                        <TouchableWithoutFeedback
+                          style={[StyleSheet.absoluteFill]}
+                          onPress={onTogglePressed(index)}>
+                          <View style={[{width: kt.width, height: kt.height}]}>
+                            <Text
+                              style={{
+                                width: resources[index].width - 4,
+                                height: resources[index].height - 4,
+                                color: color,
+                                fontFamily: fontfamily,
+                                fontSize: fontsize,
+                                fontStyle: italic ? 'italic' : 'normal',
+                                fontWeight: bold ? 'bold' : 'normal',
+                              }}>
+                              {value}
+                            </Text>
+                          </View>
+                        </TouchableWithoutFeedback>
+                      </GestureBox>
+                    ) : null}
+                  </View>
+                ),
+              )}
+              {/* <LogoPirate width={45} height={45} fill={'rgb(0,0,0)'} />
+              {Object.values(svgimages).map((IconItem, index) => (
+                <IconItem
+                  key={index}
+                  width={45}
+                  height={45}
+                  fill="rgb(0,0,0)"
+                />
+              ))} */}
             </View>
           </View>
-          <View
-            onLayout={ev => {
-              const layout = ev.nativeEvent.layout;
-              setLimitationHeight(layout.height);
-              setLimitationWidth(layout.width);
-            }}
-            style={{flex: 1}}>
-            {resources.map(
-              (
-                {
-                  width,
-                  height,
-                  type,
-                  x,
-                  y,
-                  value,
-                  color,
-                  fontfamily,
-                  fontsize,
-                  bold,
-                  italic,
-                },
-                index,
-              ) => (
-                <View key={index}>
-                  {type === 'image' ? (
-                    <GestureBox
-                      isSelected={index === selectedIndex}
-                      limitationHeight={limitationHeight}
-                      limitationWidth={limitationWidth}
-                      onRemove={onRemove(index)}
-                      onResizeEnd={boxPosition => {
-                        const _boxArray = [...resources];
-                        const _box = {
-                          ..._boxArray[index],
-                          x: boxPosition.x,
-                          y: boxPosition.y,
-                          height: boxPosition.height,
-                          width: boxPosition.width,
-                        };
-                        setKT({
-                          width: boxPosition.width,
-                          height: boxPosition.height,
-                        });
-                        dispatch(updateResource(index, _box));
-                      }}>
-                      <TouchableWithoutFeedback
-                        style={[StyleSheet.absoluteFill]}
-                        onPress={onTogglePressed(index)}>
-                        <View style={[{width: kt.width, height: kt.height}]}>
-                          <Image
-                            resizeMode="cover"
-                            style={{
-                              width: resources[index].width - 4,
-                              height: resources[index].height - 4,
-                            }}
-                            source={{uri: value}}
-                          />
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </GestureBox>
-                  ) : type === 'text' ? (
-                    <GestureBox
-                      isSelected={index === selectedIndex}
-                      limitationHeight={limitationHeight}
-                      limitationWidth={limitationWidth}
-                      onRemove={onRemove(index)}
-                      onResizeEnd={boxPosition => {
-                        const _boxArray = [...resources];
-                        const _box = {
-                          ..._boxArray[index],
-                          x: boxPosition.x,
-                          y: boxPosition.y,
-                          height: boxPosition.height,
-                          width: boxPosition.width,
-                        };
-                        setKT({
-                          width: boxPosition.width,
-                          height: boxPosition.height,
-                        });
-                        dispatch(updateResource(index, _box));
-                      }}>
-                      <TouchableWithoutFeedback
-                        style={[StyleSheet.absoluteFill]}
-                        onPress={onTogglePressed(index)}>
-                        <View style={[{width: kt.width, height: kt.height}]}>
-                          <Text
-                            style={{
-                              width: resources[index].width - 4,
-                              height: resources[index].height - 4,
-                              color: color,
-                              fontFamily: fontfamily,
-                              fontSize: fontsize,
-                              fontStyle: italic ? 'italic' : 'normal',
-                              fontWeight: bold ? 'bold' : 'normal',
-                            }}>
-                            {value}
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </GestureBox>
-                  ) : null}
-                </View>
-              ),
-            )}
-            <LogoPirate width={45} height={45} fill={'rgb(0,0,0)'} />
-            {Object.values(svgimages).map((IconItem, index) => (
-              <IconItem key={index} width={45} height={45} fill="rgb(0,0,0)" />
-            ))}
-          </View>
-        </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </>
   );
 };
 const styles = StyleSheet.create({
