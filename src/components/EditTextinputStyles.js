@@ -56,18 +56,13 @@ const EditTextinputStyles = props => {
   console.log(route?.params, 'route');
   console.log(route?.params?.params?.index, 'route');
 
-  useEffect(
-    () => {
-      setColors(colorStore);
-      setFontFamily(route?.params?.params?.fontfamily);
-      setText(route?.params?.params?.value);
-      setcolorText(route?.params?.params?.color);
-      setFontSize(route?.params?.params?.fontsize);
-    },
-    [
-      // colorStore
-    ],
-  );
+  useEffect(() => {
+    setColors(colorStore);
+    setFontFamily(route?.params?.params?.fontfamily);
+    setText(route?.params?.params?.value);
+    setcolorText(route?.params?.params?.color);
+    setFontSize(route?.params?.params?.fontsize);
+  }, [colorStore]);
   const changeColor = item => {
     setcolorText(item.value);
   };
