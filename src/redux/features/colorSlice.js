@@ -1,6 +1,6 @@
-import {UPDATE_COLOR} from '../actions/ColorAction';
+import {createAction, createSlice, current} from '@reduxjs/toolkit';
 const initialState = {
-  color: [
+  colorStore: [
     {
       name: 'White',
       value: 'rgb(255,255,255)',
@@ -68,17 +68,19 @@ const initialState = {
   ],
 };
 
-const actionForReducer = (state = initialState, action) => {
-  // console.log(action);
-  switch (action.type) {
-    case UPDATE_COLOR: {
-      return {
-        ...state,
-        color: [...state.color, action.payload],
-      };
-    }
-    default:
-      return state;
-  }
-};
-export default actionForReducer;
+export const colorStoreSlice = createSlice({
+  name: 'colorStore',
+  initialState,
+  reducers: {
+    addNewColor: (state, actions) => {
+      state.colorStore.push(actions.payload);
+      // state.colorStore = [...current(state.colorStore), actions.payload];
+    },
+  },
+});
+
+export const {addNewColor} = colorStoreSlice.actions;
+
+export const colorStore = state => state.color.colorStore;
+
+export default colorStoreSlice.reducer;

@@ -17,7 +17,11 @@ import Picker from './Picker';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {State} from 'react-native-gesture-handler';
-import {addResource, updateTextInput} from '../redux/actions/IconAction';
+import {
+  addResource,
+  updateResource,
+  removeResource,
+} from '../redux/features/resourceSlice';
 import {PickerFontFamily} from './PickerFontFamily';
 import {PickerFontSize} from './PickerFontSize';
 import fontfamily from '../constants/fontfamily';
@@ -47,7 +51,7 @@ const ChooseTextinputStyles = props => {
 
   const [colors, setColors] = useState(null);
 
-  const colorStore = useSelector(state => state?.Color?.color);
+  const colorStore = useSelector(state => state?.color?.colorStore);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -93,7 +97,9 @@ const ChooseTextinputStyles = props => {
             onPress={onToggleChoosingFont}
             style={styles.viewDropDown}>
             <Text style={{color: fontFamily === '' ? 'grey' : 'black'}}>
-              {fontFamily === '' ? 'Font Family' : `${fontFamily}`}
+              {fontFamily === '' || fontFamily === null
+                ? 'Font Family'
+                : `${fontFamily}`}
             </Text>
             <Image style={{width: 20, height: 20}} source={icons.sortDow} />
           </TouchableOpacity>
@@ -110,17 +116,7 @@ const ChooseTextinputStyles = props => {
           <View style={styles.viewPropDownRow}>
             <TouchableOpacity
               onPress={onToggleChoosingSize}
-              style={{
-                height: 50,
-                borderWidth: 1,
-                borderColor: 'rgb(112,112,112)',
-                borderRadius: 5,
-                width: 110,
-                alignItems: 'center',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: 5,
-              }}>
+              style={styles.choosingSize}>
               <Text style={{color: 'black'}}>{fontSize}</Text>
               <Image style={{width: 20, height: 20}} source={icons.sortDow} />
             </TouchableOpacity>
@@ -344,6 +340,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(125,146,125,3)',
     height: 90,
     marginHorizontal: 5,
+  },
+  choosingSize: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: 'rgb(112,112,112)',
+    borderRadius: 5,
+    width: 110,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 5,
   },
 });
 

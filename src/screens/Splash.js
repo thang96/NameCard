@@ -12,16 +12,16 @@ import {
   ImageBackground,
   Animated,
 } from 'react-native';
-import {icons} from '../constants';
-import Orientation from 'react-native-orientation-locker';
-import {Provider, useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {updateUse} from '../redux/actions/InfoAction';
+import {userInfo, userInfoSlice, updateUser} from '../redux/features/userSlice';
+import {useDispatch, useSelector} from 'react-redux';
 const Splash = () => {
   const [isReady, setIsReady] = useState(false);
-  const isLogin = useSelector(state => state);
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  // const InfoUse = useSelector(state => state.user.user);
+  const InfoUse = useSelector(userInfo);
+  // console.log(InfoUse, 'user');
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const spinValue = useRef(new Animated.Value(0)).current;
@@ -48,19 +48,22 @@ const Splash = () => {
   };
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['360deg', '0deg'],
+    outputRange: ['360deg', '-360deg'],
   });
 
   useEffect(() => {
-    Orientation.lockToLandscape();
+    // Orientation.lockToLandscape();
     fadeIn();
-  });
+  }, []);
 
   useEffect(() => {
     const login = setTimeout(() => {
       AsyncStorage.getItem('useInfo')
         .then(value => {
-          dispatch(updateUse(JSON.parse(value))), setIsReady(true);
+          // console.log(value, 'value');
+          dispatch(updateUser(JSON.parse(value)));
+          setIsReady(true);
+          // console.log(JSON.parse(value), 'asyncstorage');
           clearTimeout(login);
         })
         .catch(e => {
@@ -68,18 +71,19 @@ const Splash = () => {
           clearTimeout(login);
         });
     }, 2000);
-  });
+  }, []);
 
   useEffect(() => {
     if (!isReady) return;
+
     navigation.navigate(
-      isLogin?.InfoUse?.use === '' ||
-        isLogin?.InfoUse?.use === undefined ||
-        isLogin?.InfoUse?.use === null
+      InfoUse?.usename === '' ||
+        InfoUse?.usename === undefined ||
+        InfoUse?.usename === null
         ? 'StackLoginNavigation'
         : 'StackHomeNavigation',
     );
-  }, [isLogin, isReady]);
+  }, [isReady]);
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
@@ -106,12 +110,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textTitle: {
-    fontSize: 50,
+    fontSize: 60,
     color: 'rgb(0,0,0)',
     alignSelf: 'center',
     fontWeight: 'bold',
     fontStyle: 'italic',
-    transform: [{skewX: '-9deg'}, {skewY: '-9deg'}],
+    transform: [{skewX: '-9deg'}, {skewY: '-8deg'}],
   },
 });
 

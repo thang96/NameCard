@@ -6,19 +6,16 @@ import CustomButton from '../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
 import CustomInput from './CustomInput';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateColor} from '../redux/actions/ColorAction';
+import {addNewColor} from '../redux/features/colorSlice';
 const CreateColor = props => {
   const wheelStyle = {width: '60%', height: 250};
   const sliderStyle = {height: 40, width: '60%'};
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState('rgb(255,255,255)');
   const navigation = useNavigation();
   const [colorName, setColorName] = useState('');
   const dispatch = useDispatch();
-  const colorStore = useSelector(state => state?.Color?.color);
-  // console.log('----', colorStore, '----');
-  // console.log('----', color, colorName, '----');
+  const colorStore = useSelector(state => state?.color?.colorStore);
   const colorChanged = ({h, s, v}) => {
-    // console.log(h, s, v, 'hsv');
     let _rgb = colorsys.hsvToRgb({
       h: h,
       s: s * 100,
@@ -27,7 +24,6 @@ const CreateColor = props => {
     let text_rgb = `rgb(${_rgb.r},${_rgb.g}, ${_rgb.b})`;
     setColor(text_rgb);
   };
-  // console.log(color.trim().length, colorName.trim().length);
   useEffect(() => {
     validateOk;
   }, [color, colorName]);
@@ -45,14 +41,7 @@ const CreateColor = props => {
       <View style={styles.eachView2}>
         <View style={[styles.viewColor, {backgroundColor: color}]}></View>
         <Text style={styles.textColor}>{color}</Text>
-        <View
-          style={{
-            height: 50,
-            marginTop: 20,
-            width: 250,
-            backgroundColor: 'white',
-            borderRadius: 10,
-          }}>
+        <View style={styles.colorName}>
           <CustomInput
             value={colorName}
             changeText={text => setColorName(text)}
@@ -76,9 +65,10 @@ const CreateColor = props => {
                   isok = true;
                 }
               });
+              const newColor = {name: colorName, value: color};
               isok == true
                 ? alert('Color name is duplicate')
-                : dispatch(updateColor({name: colorName, value: color}));
+                : dispatch(addNewColor(newColor));
               setColorName('');
               navigation.goBack();
             }}
@@ -119,6 +109,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'rgba(0,0,0,0.8)',
     marginTop: 10,
+  },
+  colorName: {
+    height: 50,
+    marginTop: 20,
+    width: 250,
+    backgroundColor: 'white',
+    borderRadius: 10,
   },
 });
 export default CreateColor;

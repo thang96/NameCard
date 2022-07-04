@@ -4,7 +4,7 @@ import {SafeAreaView, StyleSheet} from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import AppContainer from './src/screens/AppContainer';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+import {store} from './src/redux/store';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 const App = () => {
   useEffect(() => {

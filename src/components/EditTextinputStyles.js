@@ -17,15 +17,12 @@ import Picker from './Picker';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
 import {State} from 'react-native-gesture-handler';
-import {
-  addResource,
-  updateTextInput,
-  updateResource,
-} from '../redux/actions/IconAction';
+import {addNewColor} from '../redux/features/colorSlice';
 import {PickerFontFamily} from './PickerFontFamily';
 import {PickerFontSize} from './PickerFontSize';
 import fontfamily from '../constants/fontfamily';
 import CustomPicker from './CustomPicker';
+import {updateResource} from '../redux/features/resourceSlice';
 
 const FONT_SIZES = Array.from(new Array(62)).map((_, index) => ({
   label: index + 8,
@@ -33,10 +30,6 @@ const FONT_SIZES = Array.from(new Array(62)).map((_, index) => ({
 }));
 
 const EditTextinputStyles = props => {
-  useEffect(() => {
-    Orientation.lockToLandscape();
-  });
-
   // const [modalVisible, setModalVisible] = useState(true);
   const [colorText, setcolorText] = useState('black');
   const [text, setText] = useState('');
@@ -48,7 +41,7 @@ const EditTextinputStyles = props => {
   const [isChoosingFont, setIsChoosingFont] = useState(false);
   const [isChoosingSize, setIsChoosingSize] = useState(false);
   const [colors, setColors] = useState(null);
-  const colorStore = useSelector(state => state?.Color?.color);
+  const colorStore = useSelector(state => state.color.colorStore);
   const dispatch = useDispatch();
 
   const route = useRoute();
@@ -56,18 +49,13 @@ const EditTextinputStyles = props => {
   console.log(route?.params, 'route');
   console.log(route?.params?.params?.index, 'route');
 
-  useEffect(
-    () => {
-      setColors(colorStore);
-      setFontFamily(route?.params?.params?.fontfamily);
-      setText(route?.params?.params?.value);
-      setcolorText(route?.params?.params?.color);
-      setFontSize(route?.params?.params?.fontsize);
-    },
-    [
-      // colorStore
-    ],
-  );
+  useEffect(() => {
+    setColors(colorStore);
+    setFontFamily(route?.params?.params?.fontfamily);
+    setText(route?.params?.params?.value);
+    setcolorText(route?.params?.params?.color);
+    setFontSize(route?.params?.params?.fontsize);
+  }, [colorStore]);
   const changeColor = item => {
     setcolorText(item.value);
   };
@@ -107,7 +95,9 @@ const EditTextinputStyles = props => {
             onPress={onToggleChoosingFont}
             style={styles.viewDropDown}>
             <Text style={{color: fontFamily === '' ? 'grey' : 'black'}}>
-              {fontFamily === '' ? 'Font Family' : `${fontFamily}`}
+              {fontFamily === '' || fontFamily === null
+                ? 'Font Family'
+                : `${fontFamily}`}
             </Text>
             <Image style={{width: 20, height: 20}} source={icons.sortDow} />
           </TouchableOpacity>

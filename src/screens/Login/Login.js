@@ -14,14 +14,10 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {colos, icons, images} from '../../constants';
-import Orientation from 'react-native-orientation-locker';
 import {isValidEmail, isValidPassword} from '../../utilies/Validations';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
-  useEffect(() => {
-    Orientation.lockToLandscape();
-  }, []);
   const [usename, setUsename] = useState('');
   const [password, setPassword] = useState('');
   const [errUsename, setErrUsename] = useState('');

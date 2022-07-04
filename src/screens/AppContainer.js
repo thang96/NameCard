@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
-import Orientation from 'react-native-orientation-locker';
 import {NavigationContainer} from '@react-navigation/native';
 import {Splash} from '../screens';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -9,9 +8,6 @@ import StackLoginNavigation from '../navigation/StackLoginNavigation';
 const Stack = createStackNavigator();
 
 const AppContainer = () => {
-  useEffect(() => {
-    Orientation.lockToLandscape();
-  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <NavigationContainer>
